@@ -17,25 +17,36 @@ Here, we've utilized risk analytics concepts, particularly focusing on variable 
 Let's commence by uncovering the hidden patterns within the loan data and constructing a robust system to predict loan defaults!
 """
 
-# Import libraries for data manipulation and analysis
-import pandas as pd
-import numpy as np
 
-# Import libraries for data visualization
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Suppress warnings
+# Suppress warnings & subprocess
+import subprocess
 import warnings
 warnings.filterwarnings('ignore')
 
-# Mount Google Drive (optional, for Colab notebooks)
-# from google.colab import drive
-# drive.mount('/content/drive')
+try:
+    # Import libraries for data manipulation and analysis
+    import pandas as pd
+    import numpy as np
+
+    # Import libraries for data visualization
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+except ImportError as e:
+    # If any ImportError occurs, extract the name of the missing package
+    missing_package = str(e).split("'")[1]
+    
+    # Use subprocess to execute pip install command
+    subprocess.call(['pip', 'install', missing_package])
+    
+    # Import the packages again after installation
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import seaborn as sns
 
 # Define the file path to the loan data
-#file_path = '/content/drive/MyDrive/lending-club-case-study/loan.csv'
-file_path = '/loan.csv'
+file_path = 'loan.csv'
 
 # Read the loan data into a pandas DataFrame
 df = pd.read_csv(file_path)
